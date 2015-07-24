@@ -66,7 +66,7 @@ Vagrant.configure(2) do |config|
   # documentation for more information about their specific syntax and use.
   config.vm.provision "shell", inline: <<-SHELL
     sudo apt-get update
-    sudo apt-get install -y build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev
+    sudo apt-get install -y build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev libpq-dev
     sudo apt-get install heroku-toolbelt
 
     sudo apt-get install -y zsh
