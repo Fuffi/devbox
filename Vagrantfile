@@ -80,7 +80,7 @@ Vagrant.configure(2) do |config|
     wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz
     tar -xvzf ruby-2.2.2.tar.gz
     cd ruby-2.2.2/
-    ./configure --prefix=/usr/local
+    ./configure --prefix=/home/vagrant
     make
     make install
 
