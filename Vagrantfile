@@ -91,6 +91,7 @@ Vagrant.configure(2) do |config|
     sudo apt-get update
     sudo apt-get install -y build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev libpq-dev
     sudo apt-get install -y postgresql
+    sudo apt-get remove -y ruby
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
     sudo -u postgres psql -c "CREATE USER vagrant WITH CREATEDB PASSWORD 'vagrant';"
@@ -100,12 +101,12 @@ Vagrant.configure(2) do |config|
     wget --no-check-certificate http://install.ohmyz.sh -O - | sh
 
     cd /tmp
-    wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.2.tar.gz
-    tar -xvzf ruby-2.2.2.tar.gz
-    cd ruby-2.2.2/
+    wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz
+    tar -xvzf ruby-2.2.3.tar.gz
+    cd ruby-2.2.3/
     ./configure --prefix=/home/vagrant
     make
-    make install
+    sudo make install
 
   SHELL
 end
