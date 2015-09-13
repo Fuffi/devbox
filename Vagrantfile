@@ -108,5 +108,6 @@ Vagrant.configure(2) do |config|
     make
     sudo make install
 
+    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
   SHELL
 end
