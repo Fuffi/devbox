@@ -95,6 +95,7 @@ Vagrant.configure(2) do |config|
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
 
     sudo -u postgres psql -c "CREATE USER vagrant WITH CREATEDB PASSWORD 'vagrant';"
+    sudo -u postgres psql -c "CREATE USER carwow WITH CREATEDB PASSWORD 'carwow';"
 
     sudo apt-get install -y zsh
     sudo chsh -s $(which zsh) vagrant
@@ -109,5 +110,9 @@ Vagrant.configure(2) do |config|
     sudo make install
 
     wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+
+    wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+    sudo apt-get update
+    sudo apt-get -y install esl-erlang elixir nodejs npm
   SHELL
 end
