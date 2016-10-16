@@ -23,6 +23,7 @@ Vagrant.configure(2) do |config|
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
   config.vm.network "forwarded_port", guest: 3000, host: 3000
+  config.vm.network "forwarded_port", guest: 4000, host: 4000
   config.vm.network "forwarded_port", guest: 5000, host: 5000
 
   # Create a private network, which allows host-only access to the machine
@@ -113,6 +114,9 @@ Vagrant.configure(2) do |config|
 
     wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
     sudo apt-get update
-    sudo apt-get -y install esl-erlang elixir nodejs npm
+    sudo apt-get -y install esl-erlang elixir
+
+    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+    sudo apt-get install -y nodejs
   SHELL
 end
