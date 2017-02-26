@@ -1,0 +1,13 @@
+---
+  
+- name: Install base packages
+  apt: name={{item}} state=installed
+  with_items:
+    - build-essential
+    - zlib1g-dev
+    - libssl-dev
+    - libreadline6-dev
+    - libyaml-dev
+    - libpq-dev
+    - python-pip
+  become: true

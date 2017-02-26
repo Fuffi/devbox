@@ -1,0 +1,12 @@
+---
+- name: .gitconfig
+  template:
+    src: .gitconfig
+    dest: /home/ubuntu/.gitconfig
+    mode: 0644
+
+- name: .zshrc
+  template:
+    src: .zshrc
+    dest: /home/ubuntu/.zshrc
+    mode: 0644

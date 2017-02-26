@@ -12,7 +12,7 @@ Vagrant.configure(2) do |config|
 
   # Every Vagrant development environment requires a box. You can search for
   # boxes at https://atlas.hashicorp.com/search.
-  config.vm.box = "ubuntu/trusty64"
+  config.vm.box = "ubuntu/xenial64"
 
   # Disable automatic box update checking. If you disable this, then
   # boxes will only be checked for updates when the user runs
@@ -22,9 +22,11 @@ Vagrant.configure(2) do |config|
   # Create a forwarded port mapping which allows access to a specific port
   # within the machine from a port on the host machine. In the example below,
   # accessing "localhost:8080" will access port 80 on the guest machine.
-  config.vm.network "forwarded_port", guest: 3000, host: 3000
-  config.vm.network "forwarded_port", guest: 4000, host: 4000
-  config.vm.network "forwarded_port", guest: 5000, host: 5000
+
+  forwarded_ports = [3000, 4000, 5000]
+  forwarded_ports.each do |p|
+    config.vm.network :forwarded_port, guest: p, host: p
+  end
 
   # Create a private network, which allows host-only access to the machine
   # using a specific IP.
@@ -68,11 +70,19 @@ Vagrant.configure(2) do |config|
       mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
     else # sorry Windows folks, I can't help you
       cpus = 2
-      mem = 1024
+      mem = 2048
     end
 
     v.customize ["modifyvm", :id, "--memory", mem]
     v.customize ["modifyvm", :id, "--cpus", cpus]
+    v.customize ["modifyvm", :id, "--acpi", "off"]
+
+    v.customize [ "guestproperty", "set", :id, "/VirtualBox/GuestAdd/VBoxService/--timesync-set-threshold", 10000 ]
+
+    v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
+    v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+
+    v.name = "devbox"
   end
   #
   # View the documentation for the provider you are using for more
@@ -88,35 +98,40 @@ Vagrant.configure(2) do |config|
   # Enable provisioning with a shell script. Additional provisioners such as
   # Puppet, Chef, Ansible, Salt, and Docker are also available. Please see the
   # documentation for more information about their specific syntax and use.
-  config.vm.provision "shell", inline: <<-SHELL
-    sudo apt-get update
-    sudo apt-get install -y build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev libpq-dev
-    sudo apt-get install -y postgresql
-    sudo apt-get remove -y ruby
-    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-    sudo -u postgres psql -c "CREATE USER vagrant WITH CREATEDB PASSWORD 'vagrant';"
-    sudo -u postgres psql -c "CREATE USER carwow WITH CREATEDB PASSWORD 'carwow';"
-
-    sudo apt-get install -y zsh
-    sudo chsh -s $(which zsh) vagrant
-    wget --no-check-certificate http://install.ohmyz.sh -O - | sh
-
-    cd /tmp
-    wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz
-    tar -xvzf ruby-2.2.3.tar.gz
-    cd ruby-2.2.3/
-    ./configure --prefix=/home/vagrant
-    make
-    sudo make install
-
-    wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
-
-    wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
-    sudo apt-get update
-    sudo apt-get -y install esl-erlang elixir
-
-    curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
-    sudo apt-get install -y nodejs
-  SHELL
+  config.vm.provision 'ansible_local' do |ansible|
+    ansible.playbook = 'dev.yml'
+    ansible.provisioning_path = '/vagrant/playbooks'
+  end
+  #
+  # config.vm.provision "shell", inline: <<-SHELL
+  #   sudo apt-get update
+  #   sudo apt-get install -y build-essential zlib1g-dev libssl-dev libreadline6-dev libyaml-dev libpq-dev
+  #   sudo apt-get install -y postgresql
+  #   sudo apt-get remove -y ruby
+  #   wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  #
+  #   sudo -u postgres psql -c "CREATE USER vagrant WITH CREATEDB PASSWORD 'vagrant';"
+  #   sudo -u postgres psql -c "CREATE USER carwow WITH CREATEDB PASSWORD 'carwow';"
+  #
+  #   sudo apt-get install -y zsh
+  #   sudo chsh -s $(which zsh) vagrant
+  #   wget --no-check-certificate http://install.ohmyz.sh -O - | sh
+  #
+  #   cd /tmp
+  #   wget http://ftp.ruby-lang.org/pub/ruby/2.2/ruby-2.2.3.tar.gz
+  #   tar -xvzf ruby-2.2.3.tar.gz
+  #   cd ruby-2.2.3/
+  #   ./configure --prefix=/home/vagrant
+  #   make
+  #   sudo make install
+  #
+  #   wget -O- https://toolbelt.heroku.com/install-ubuntu.sh | sh
+  #
+  #   wget https://packages.erlang-solutions.com/erlang-solutions_1.0_all.deb && sudo dpkg -i erlang-solutions_1.0_all.deb
+  #   sudo apt-get update
+  #   sudo apt-get -y install esl-erlang elixir
+  #
+  #   curl -sL https://deb.nodesource.com/setup_6.x | sudo -E bash -
+  #   sudo apt-get install -y nodejs
+  # SHELL
 end

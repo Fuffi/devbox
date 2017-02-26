@@ -1,0 +1,14 @@
+---
+
+- name: Install zsh packages
+  apt: name={{item}} state=installed
+  with_items:
+    - zsh
+
+- user:
+    name: ubuntu
+    shell: /bin/zsh
+    append: yes
+
+- name: Clone oh-my-zsh repo
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/ubuntu/.oh-my-zsh

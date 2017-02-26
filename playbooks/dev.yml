@@ -1,0 +1,11 @@
+- hosts: all
+  become: true
+
+  roles:
+    - base
+    - zsh
+    - docker
+    - postgres
+    - elixir
+    - node
+    - dotfiles

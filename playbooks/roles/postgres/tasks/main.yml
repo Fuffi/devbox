@@ -1,0 +1,12 @@
+---
+
+- name: Pull postgres image
+  docker_image:
+    name: postgres
+  become: true
+
+- name: Install postgres
+  docker_container:
+    name: postgres
+    image: library/postgres
+    state: present
