@@ -9,3 +9,4 @@
   with_items:
     - esl-erlang
     - elixir
+    - inotify-tools # Needed for Phoenix's live reload

@@ -3,35 +3,29 @@
 - name: Install docker-py
   pip:
     name: docker-py
-  become: true
 
 - name: Add docker apt key
   apt_key:
     url: https://apt.dockerproject.org/gpg
     state: present
-  become: true
 
 - name: Add docker apt repository
   apt_repository:
     repo: deb https://apt.dockerproject.org/repo/ ubuntu-xenial main
     state: present
-  become: true
 
 - name: Add docker group
   group:
     name: docker
     state: present
-  become: true
 
 - name: Add vagrant user to docker group
   user:
-    name: ubuntu
+    name: vagrant
     groups: docker
     append: yes
-  become: true
 
 - name: Install docker
   apt:
     name: docker-engine
     update_cache: true
-  become: true

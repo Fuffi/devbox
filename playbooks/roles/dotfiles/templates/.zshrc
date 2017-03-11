@@ -6,6 +6,6 @@ export ZSH_THEME="avit"
 plugins=(git)
 
 source $ZSH/oh-my-zsh.sh
-export PATH=/home/ubuntu/bin/:.:$PATH
+export PATH=/home/vagrant/bin/:.:$PATH
 # Customize to your needs...
 cd /projects/

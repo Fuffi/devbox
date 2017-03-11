@@ -2,11 +2,11 @@
 - name: .gitconfig
   template:
     src: .gitconfig
-    dest: /home/ubuntu/.gitconfig
+    dest: /home/vagrant/.gitconfig
     mode: 0644
 
 - name: .zshrc
   template:
     src: .zshrc
-    dest: /home/ubuntu/.zshrc
+    dest: /home/vagrant/.zshrc
     mode: 0644

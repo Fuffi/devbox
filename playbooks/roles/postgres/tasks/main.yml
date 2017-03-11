@@ -3,10 +3,11 @@
 - name: Pull postgres image
   docker_image:
     name: postgres
-  become: true
 
 - name: Install postgres
   docker_container:
     name: postgres
     image: library/postgres
-    state: present
+    state: started
+    restart_policy: always
+    published_ports: 5432:5432

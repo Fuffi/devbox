@@ -6,9 +6,9 @@
     - zsh
 
 - user:
-    name: ubuntu
+    name: vagrant
     shell: /bin/zsh
     append: yes
 
 - name: Clone oh-my-zsh repo
-  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/ubuntu/.oh-my-zsh
+  git: repo=https://github.com/robbyrussell/oh-my-zsh.git dest=/home/vagrant/.oh-my-zsh
