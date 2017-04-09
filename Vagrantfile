@@ -69,8 +69,8 @@ Vagrant.configure(2) do |config|
       # meminfo shows KB and we need to convert to MB
       mem = `grep 'MemTotal' /proc/meminfo | sed -e 's/MemTotal://' -e 's/ kB//'`.to_i / 1024 / 4
     else # sorry Windows folks, I can't help you
-      cpus = 2
-      mem = 1024 * 3
+      cpus = 4
+      mem = 1024 * 4
     end
 
     v.customize ["modifyvm", :id, "--memory", mem]

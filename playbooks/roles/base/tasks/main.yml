@@ -1,5 +1,5 @@
 ---
-  
+
 - name: Install base packages
   apt: name={{item}} state=installed
   with_items:
@@ -11,3 +11,14 @@
     - libpq-dev
     - python-pip
   become: true
+
+# Performance tweaks
+- name: Configure swappiness
+  lineinfile:
+    dest: '/etc/sysctl.conf'
+    line: 'vm.swappiness=10'
+
+- name: Configure vfs_cache_pressure
+  lineinfile:
+    dest: '/etc/sysctl.conf'
+    line: 'vm.vfs_cache_pressure=50'
