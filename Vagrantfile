@@ -81,6 +81,8 @@ Vagrant.configure(2) do |config|
 
     v.customize ["modifyvm", :id, "--natdnsproxy1", "off"]
     v.customize ["modifyvm", :id, "--natdnshostresolver1", "on"]
+    v.customize ["modifyvm", :id, "--cableconnected1", "on"]
+
 
     v.name = "devbox"
   end
