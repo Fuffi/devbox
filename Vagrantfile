@@ -55,6 +55,8 @@ Vagrant.configure(2) do |config|
   #   vb.memory = "1024"
   # end
 
+  config.ssh.forward_agent = true
+
   # Config from here: https://stefanwrobel.com/how-to-make-vagrant-performance-not-suck
   config.vm.provider "virtualbox" do |v|
     host = RbConfig::CONFIG['host_os']
