@@ -1,15 +1,9 @@
 ---
 
 - name: Install base packages
-  apt: name={{item}} state=installed
-  with_items:
-    - build-essential
-    - zlib1g-dev
-    - libssl-dev
-    - libreadline6-dev
-    - libyaml-dev
-    - libpq-dev
-    - python-pip
+  apt:
+    name: ['build-essential', 'zlib1g-dev', 'libssl-dev', 'libreadline6-dev', 'libyaml-dev', 'libpq-dev', 'python-pip', 'python-docker']
+    state: present
   become: true
 
 # Performance tweaks

@@ -6,12 +6,12 @@
 
 - name: Add docker apt key
   apt_key:
-    url: https://apt.dockerproject.org/gpg
+    url: https://download.docker.com/linux/ubuntu/gpg
     state: present
 
 - name: Add docker apt repository
   apt_repository:
-    repo: deb https://apt.dockerproject.org/repo/ ubuntu-xenial main
+    repo: deb https://download.docker.com/linux/ubuntu eoan stable
     state: present
 
 - name: Add docker group
@@ -27,5 +27,5 @@
 
 - name: Install docker
   apt:
-    name: docker-engine
+    name: ['docker-ce', 'docker-ce-cli', 'containerd.io']
     update_cache: true
